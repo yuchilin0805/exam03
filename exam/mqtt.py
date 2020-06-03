@@ -31,7 +31,7 @@ mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 mqttc.on_subscribe = on_subscribe
 mqttc.on_unsubscribe = on_unsubscribe
-
+ 
 # Connect and subscribe
 print("Connecting to " + host + "/" + topic)
 mqttc.connect(host, port=1883, keepalive=60)

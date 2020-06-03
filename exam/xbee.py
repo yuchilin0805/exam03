@@ -47,7 +47,7 @@ print(char.decode())
 print("start sending RPC")
 
 v=[]
-
+count=0
 while True:
     # send RPC to remote
     s.write("/getV/run\r".encode())
@@ -55,6 +55,9 @@ while True:
     line=s.read(5)
     print(line.decode())
     v.append(line.decode())
+    count=count+1
+    if count==500:
+        break
 # Settings for connection
 host = "localhost"
 topic= "velocity"

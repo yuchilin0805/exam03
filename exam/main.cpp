@@ -75,8 +75,11 @@ void ACC(){
     t[2] = ((float)acc16) / 4096.0f;
     thisx=t[0];
     thisy=t[1];
-
+    if(countv==499) countv=0;
     velocity[countv]=sqrt((thisx-lastx)*(thisx-lastx)+(thisy-lasty)*(thisy-lasty));
+    countv++;
+    lastx=thisx;
+    lasty=thisy;
     /*pc.printf("FXOS8700Q ACC: X=%1.4f(%x%x) Y=%1.4f(%x%x) Z=%1.4f(%x%x)",\
             t[0], res[0], res[1],\
             t[1], res[2], res[3],\
