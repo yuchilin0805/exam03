@@ -45,7 +45,7 @@ float lasty=0;
 float thisx=0;
 float thisy=0;
 int countv=0;
-
+int ends=0;
 int outputcount=0;
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 Thread t;
@@ -77,7 +77,10 @@ void ACC(){
     t[2] = ((float)acc16) / 4096.0f;
     thisx=t[0];
     thisy=t[1];
-    if(countv==499) countv=0;
+    if(countv==499) {
+      ends=1;
+      countv=0;
+    }
     velocity[countv]=sqrt((thisx-lastx)*(thisx-lastx)+(thisy-lasty)*(thisy-lasty));
     countv++;
     lastx=thisx;
@@ -131,7 +134,7 @@ int main(){
   t.start(callback(&queue, &EventQueue::dispatch_forever));
   ACCthread.start(callback(&ACCqueue, &EventQueue::dispatch_forever));
 
-    ACCqueue.call_every(100,ACC);
+  
 
 
 
@@ -141,6 +144,17 @@ int main(){
 
   // Setup a serial interrupt function to receive data from xbee
   xbee.attach(xbee_rx_interrupt, Serial::RxIrq);
+  //ACCqueue.call_every(100,ACC);
+
+  while(1){
+    ACCqueue.call(ACC);
+    wait(0.1);
+    if(ends)
+      break;  
+  }pc.printf("end\r\n");
+
+
+
 }
 
 void xbee_rx_interrupt(void)
@@ -197,6 +211,7 @@ void getV(Arguments *in, Reply *out) {
   char buff[5];
     sprintf(buff,"%1.3f",velocity[outputcount]);
   outputcount++;
+  pc.printf("%s",buff);
   xbee.printf("%s",buff);
 }
 

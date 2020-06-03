@@ -5,7 +5,7 @@ import paho.mqtt.client as paho
 mqttc = paho.Client()
 # XBee setting
 serdev = '/dev/ttyUSB0'
-s = serial.Serial(serdev, 9600)
+s = serial.Serial(serdev, 9600,timeout=3)
 
 s.write("+++".encode())
 char = s.read(2)
