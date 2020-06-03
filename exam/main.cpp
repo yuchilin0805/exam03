@@ -194,7 +194,7 @@ void check_addr(char *xbee_reply, char *messenger){
 }
 
 void getV(Arguments *in, Reply *out) {
-  char buf[30];
+  char buf[5];
     sprintf(buf,"%1.3f",velocity[outputcount]);
   outputcount++;
   xbee.printf("%s",buf);
