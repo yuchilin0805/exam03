@@ -45,6 +45,8 @@ float lasty=0;
 float thisx=0;
 float thisy=0;
 int countv=0;
+
+int outputcount=0;
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 Thread t;
 Thread ACCthread;
@@ -193,8 +195,8 @@ void check_addr(char *xbee_reply, char *messenger){
 
 void getV(Arguments *in, Reply *out) {
   char buf[30];
-    sprintf(buf,"%1.3f",velocity);
-  
+    sprintf(buf,"%1.3f",velocity[outputcount]);
+  outputcount++;
   xbee.printf("%s",buf);
 }
 
